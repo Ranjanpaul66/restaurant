@@ -195,3 +195,18 @@ class VoteAPI(APIView):
                     "data": ""
                 }
             return Response(res)
+
+
+class VoteResultAPI(APIView):
+    def get(self,request):
+        dict = Menu.objects.filter(date=date.today()).values('id','restaurant','restaurant__name','vote_count').order_by('-vote_count')[0]
+
+        res = {
+            "status_code": 200,
+            "message": '',
+            "data": {
+                "restaurant_id":dict['restaurant'],
+                "restaurant__name":dict['restaurant__name']
+            }
+        }
+        return Response(res)
