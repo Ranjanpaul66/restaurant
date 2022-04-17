@@ -7,7 +7,6 @@
 node_modules/
 .idea/
 __pycache__/
-*/migrations/__init__.py
 
 static_all/
 # Compiled Java class files

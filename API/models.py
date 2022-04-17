@@ -26,8 +26,8 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def get_by_natural_key(self, mobile_):
-        return self.get(mobile=mobile_)
+    def get_by_natural_key(self, email_):
+        return self.get(email=email_)
 
 
 class ApiUser(AbstractBaseUser, PermissionsMixin):
@@ -60,11 +60,12 @@ class ApiUser(AbstractBaseUser, PermissionsMixin):
 
 class Restaurant(models.Model):
     name = models.CharField(max_length=100)
-    user = models.ForeignKey("API.ApiUser", models.DO_NOTHING)
+    user = models.ForeignKey("API.ApiUser", models.DO_NOTHING,unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.IntegerField()
     updated_by = models.IntegerField(blank=True, null=True)
-
+    # class Meta:
+    #     unique_together = ('id', 'user',)
 
 
 class Menu(models.Model):
