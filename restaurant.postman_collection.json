@@ -1,0 +1,406 @@
+{
+	"info": {
+		"_postman_id": "7d360315-4451-48c2-9675-d7109ac7aaa4",
+		"name": "restaurant",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"full_name\": \"restaurent 2\",\n        \"mobile\": \"01700000013\",\n        \"password\": \"123456\",\n        \"email\": \"restaurent2@gmail.com\",\n        \"department\": \"restaurent\",\n        \"user_role\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/user-create",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"user-create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"employee4@gmail.com\",\n    \"password\":\"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/get-token",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"get-token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get refresh token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjE2MzI2Mzk5LCJqdGkiOiI0MTM0YmZlOTAxYjQ0OTczODZhM2M5MzM2MWIyNmJmMiIsInVzZXJfaWQiOjF9.QgqzgqiLRcjFYOZID5hTnyVdpIkaW2gaTUXUuPl7HD0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"refresh\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY1MDI4NDg5OSwiaWF0IjoxNjUwMTk4NDk5LCJqdGkiOiI5NjI5NDI1ODBjOTE0MTJlYTY3MjUyMDcwMWJhY2MxZiIsInVzZXJfaWQiOjF9.C7xSdkh60_HE8m6tpcXF0yTmFOC5tHLgAXdAJZdNkeE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/refresh-token/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"refresh-token",
+						""
+					]
+				},
+				"description": "required field is \"refresh\""
+			},
+			"response": []
+		},
+		{
+			"name": "Create Employee",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjUwMTk0ODU3LCJpYXQiOjE2NTAxOTQ1NTcsImp0aSI6ImQyNmE5MWM1Y2VhYzQ1ODhhMGY4M2ZlMWExMjU2OTdiIiwidXNlcl9pZCI6N30.P1gnQrn4JagS4v1cQaznPST0HAvanXyrIXrpvnkH-Tk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"full_name\": \"restaurent 3 \",\n        \"mobile\": \"01700000012\",\n        \"password\": \"123456\",\n        \"email\": \"employee12@gmail.com\",\n        \"department\": \"restaurent\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/employee-create",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"employee-create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Restaurant",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjUxNTgyOTk3LCJpYXQiOjE2NTAyODY5OTcsImp0aSI6ImE5NWI3NTU2N2MxYzQzYzU4ZWQzZGJhODBhM2MyY2JlIiwidXNlcl9pZCI6MX0.UQQW4M7IgRP_x1GSKzGRs9VfOV3EGZK6xf1_J0yJiC4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Khulna 5 stars\",\n    \"user\": 14\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/restaurant-create",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"restaurant-create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Menus",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjUxNTgzNzU5LCJpYXQiOjE2NTAyODc3NTksImp0aSI6ImYzYzJlNGZjOTQ1MjRiMzE4NDViODdkODUyZjJjYjUyIiwidXNlcl9pZCI6MTR9.EzvluNaRRkcXGIVd_I2z57gKosdZSFtx6FtscXJpX_M",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"menus\": \"Veg: Dal Makhani,Chicken,Pokora\",\n        \"restaurant\":9\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/menus-create",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"menus-create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Today's menu",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjUxNTA1MDUyLCJpYXQiOjE2NTAyMDkwNTIsImp0aSI6IjVkMjRkYWUwNzY0YjRhZmRhOTYzOTNhY2NkMTFiYTlhIiwidXNlcl9pZCI6MTJ9.XognbORmnqO2DWmXMknLA14FSX2kK2FtDUI6fCb4z0c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/today-menu",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"today-menu"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vote",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjUxNTg1Mjc0LCJpYXQiOjE2NTAyODkyNzQsImp0aSI6IjBiMzI4ODgxNTAxMTQ0ZTU5NWM2ZDM3ZTc5Mzc3N2M2IiwidXNlcl9pZCI6N30.4Oai_xer1wxKiqooXcEZ4FA3zIHpeRTg3wQ8fCqR_FE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"menu_id\":11\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/vote",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"vote"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vote result",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjUxNTg1Mjc0LCJpYXQiOjE2NTAyODkyNzQsImp0aSI6IjBiMzI4ODgxNTAxMTQ0ZTU5NWM2ZDM3ZTc5Mzc3N2M2IiwidXNlcl9pZCI6N30.4Oai_xer1wxKiqooXcEZ4FA3zIHpeRTg3wQ8fCqR_FE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/result",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"result"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjUxNTUzMzYxLCJpYXQiOjE2NTAyNTczNjEsImp0aSI6IjcxOTFmZmJmMDBkZjQ1ZmNhYjgyMjQ4MjAyNzgyNzczIiwidXNlcl9pZCI6OX0.5iknAu5czMiYMdgnTJmJPBAg2AIuputIAIfQiMqOqus",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"refresh_token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY1MTEyMTM2MSwiaWF0IjoxNjUwMjU3MzYxLCJqdGkiOiIyMzlkOTM2OWNiNmE0NWY4OTM0NTExM2FkYmZlNzgxMSIsInVzZXJfaWQiOjl9.YTZ1ePotp1HtAhMMkLMeE0-UDY5PCoCrQYzMKKwM_ZA\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/logout",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

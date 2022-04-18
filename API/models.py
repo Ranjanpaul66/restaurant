@@ -90,3 +90,13 @@ class VoteByUser(models.Model):
 
     class Meta:
         unique_together = ('selected_menu', 'date','created_by',)
+
+class WinnerRestaurant(models.Model):
+    selected_menu = models.IntegerField()
+    restaurant_id = models.IntegerField()
+    date = models.DateField(auto_now_add=True)
+    menus = models.CharField(max_length=250,default="menus")
+    restaurant_name = models.CharField(max_length=100,default="restaurant_name")
+
+    class Meta:
+        unique_together = ('restaurant_id', 'date')

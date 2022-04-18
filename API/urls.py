@@ -13,4 +13,5 @@ urlpatterns = [
     re_path('today-menu', TodayMenuAPI.as_view(), name='today_menu'),
     re_path('result', VoteResultAPI.as_view(), name='vote_result'),
     re_path('vote', VoteAPI.as_view(), name='vote'),
+    re_path('logout', LogoutViewAPI.as_view(), name='logout'),
 ]

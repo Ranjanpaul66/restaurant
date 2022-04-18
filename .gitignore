@@ -15,7 +15,7 @@ static_all/
 # Compiled Python bytecode
 *.py[cod]
 # Log files
-*.log
+#*.log
 settings
 # Package files
 Media_buy_tracker/settings.py

@@ -6,11 +6,17 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import Menu
 from datetime import date
 from django.db import transaction
-
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import status
+import datetime
+from .custom_logger import setup_logger
+logger = setup_logger("api_logger", "all_logs/api.log")
 
 class UserAPI(APIView):
     def post(self, request):
         res = ""
+        logger.warning("User API")
+        logger.warning(request.data)
         serializer = UsersSerializers(data=request.data)
         if serializer.is_valid():
             obj = serializer.save()
@@ -20,6 +26,8 @@ class UserAPI(APIView):
                 "message": "",
                 "data": obj.pk
             }
+            logger.warning("Log in API")
+            logger.warning(request.data)
         else:
             error = serializer.errors
             res = {
@@ -100,7 +108,7 @@ class CreateMenusAPI(APIView):
             "data": ''
         }
         if request.user.user_role_id != 2:
-            res['message'] = "Permission Deny"
+            res['message'] = "Permission Deny, Only Restaurant's User can Access!"
             res['data'] = ''
             return Response(res)
         request.data['created_by'] = request.user.id
@@ -196,17 +204,64 @@ class VoteAPI(APIView):
                 }
             return Response(res)
 
-
 class VoteResultAPI(APIView):
+    permission_classes = (IsAuthenticated,)
     def get(self,request):
-        dict = Menu.objects.filter(date=date.today()).values('id','restaurant','restaurant__name','vote_count').order_by('-vote_count')[0]
+        winner_obj = WinnerRestaurant.objects.filter(date=datetime.date.today())
+        res=''
+        if len(winner_obj) ==0:
+            dict = Menu.objects.filter(date=date.today()).values('id','menus','restaurant','restaurant__name','vote_count').order_by('-vote_count')
 
-        res = {
-            "status_code": 200,
-            "message": '',
-            "data": {
-                "restaurant_id":dict['restaurant'],
-                "restaurant__name":dict['restaurant__name']
+            today = datetime.date.today()
+            previous_day = today - datetime.timedelta(days=1)
+            fromDate_object = previous_day - datetime.timedelta(days=1)
+            last_days_winners = WinnerRestaurant.objects.filter(date__in=[fromDate_object, previous_day]).values("restaurant_id")
+            element_no = 0
+            if len(last_days_winners) >0:
+                for i in dict:
+                    if i['restaurant'] == last_days_winners[0]['restaurant_id'] and i['restaurant'] == last_days_winners[1]['restaurant_id']:
+                        element_no=1
+                        break
+                    break
+            WinnerRestaurant.objects.create(selected_menu=dict[element_no]['id'],restaurant_id=dict[element_no]['restaurant'],menus=dict[element_no]['menus'],date=today,restaurant_name=dict[element_no]['restaurant__name'])
+            res = {
+                "status_code": 200,
+                "message": 'success',
+                "data": {
+                    "restaurant_id":dict[element_no]['restaurant'],
+                    "restaurant_name":dict[element_no]['restaurant__name'],
+                    "menus":dict[element_no]['menus']
+                }
             }
-        }
+        else:
+            res = {
+                "status_code": 200,
+                "message": 'success',
+                "data": {
+                    "restaurant_id": winner_obj[0].restaurant_id,
+                    "restaurant_name": winner_obj[0].restaurant_name,
+                    "menus": winner_obj[0].menus
+                }
+            }
         return Response(res)
+
+
+class LogoutViewAPI(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            print(e)
+            res = {
+                "status_code": 400,
+                "message": '',
+                "data": "Bad request"
+            }
+            return Response(res)
+

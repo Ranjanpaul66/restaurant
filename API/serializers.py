@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import *
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer,api_settings,update_last_login
+from .custom_logger import setup_logger
+logger = setup_logger("api_logger", "all_logs/api.log")
 
 
 class UsersSerializers(serializers.ModelSerializer):
@@ -17,7 +19,8 @@ class UsersSerializers(serializers.ModelSerializer):
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
-        print(attrs)
+        logger.warning("Log in API")
+        logger.warning(attrs)
         data = super().validate(attrs)
         refresh = self.get_token(self.user)
         data['refresh'] = str(refresh)
