@@ -26,8 +26,6 @@ class UserAPI(APIView):
                 "message": "",
                 "data": obj.pk
             }
-            logger.warning("Log in API")
-            logger.warning(request.data)
         else:
             error = serializer.errors
             res = {
