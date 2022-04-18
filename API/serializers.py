@@ -19,8 +19,6 @@ class UsersSerializers(serializers.ModelSerializer):
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
-        logger.warning("Log in API")
-        logger.warning(attrs)
         data = super().validate(attrs)
         refresh = self.get_token(self.user)
         data['refresh'] = str(refresh)
@@ -34,6 +32,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
             "data":data
         }
         update_last_login(None, self.user)
+        logger.warning("Log in response")
+        logger.warning(main_data)
         return main_data
 
 

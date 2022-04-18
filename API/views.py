@@ -15,7 +15,7 @@ logger = setup_logger("api_logger", "all_logs/api.log")
 class UserAPI(APIView):
     def post(self, request):
         res = ""
-        logger.warning("User API")
+        logger.warning("User API request")
         logger.warning(request.data)
         serializer = UsersSerializers(data=request.data)
         if serializer.is_valid():
@@ -33,6 +33,8 @@ class UserAPI(APIView):
                 "message": 'error',
                 "data": error
             }
+        logger.warning("User API response --> ")
+        logger.warning(res)
         return Response(res)
 
 
@@ -44,6 +46,8 @@ class EmployeeCreateAPI(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
+        logger.warning("EmployeeCreate  API request --> ")
+        logger.warning(request.data)
         res = {
             "status_code": 401,
             "message": '',
@@ -52,6 +56,10 @@ class EmployeeCreateAPI(APIView):
         if request.user.user_role_id != 1:
             res['message'] = "Permission Deny. Only Admin is Allowed!"
             res['data'] = ''
+
+            logger.warning("EmployeeCreate API response --> ")
+            logger.warning(res)
+            
             return Response(res)
         request.data['user_role'] = 3
         serializer = UsersSerializers(data=request.data)
@@ -65,7 +73,9 @@ class EmployeeCreateAPI(APIView):
             res['status_code'] = 400
             res['message'] = "error"
             res['data'] = serializer.errors
-
+            
+        logger.warning("EmployeeCreate API response --> ")
+        logger.warning(res)
         return Response(res)
 
 
@@ -73,6 +83,8 @@ class CreateRestaurantAPI(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
+        logger.warning("CreateRestaurant  API request --> ")
+        logger.warning(request.data)
         res = {
             "status_code": 401,
             "message": '',
@@ -81,6 +93,8 @@ class CreateRestaurantAPI(APIView):
         if request.user.user_role_id != 1:
             res['message'] = "Permission Deny, Only Admin User can Create restaurant!"
             res['data'] = ''
+            logger.warning("CreateRestaurant  API response --> ")
+            logger.warning(res)
             return Response(res)
         request.data['created_by'] = request.user.id
         serializer = RestaurantSerializer(data=request.data)
@@ -93,6 +107,8 @@ class CreateRestaurantAPI(APIView):
             res['status_code'] = 400
             res['message'] = "error"
             res['data'] = serializer.errors
+        logger.warning("CreateRestaurant API response --> ")
+        logger.warning(res)
         return Response(res)
 
 
@@ -100,6 +116,8 @@ class CreateMenusAPI(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
+        logger.warning("CreateMenus  API request --> ")
+        logger.warning(request.data)
         res = {
             "status_code": 401,
             "message": '',
@@ -108,6 +126,8 @@ class CreateMenusAPI(APIView):
         if request.user.user_role_id != 2:
             res['message'] = "Permission Deny, Only Restaurant's User can Access!"
             res['data'] = ''
+            logger.warning("EmployeeCreate  API response --> ")
+            logger.warning(res)
             return Response(res)
         request.data['created_by'] = request.user.id
         request.data['user'] = request.user.id
@@ -123,6 +143,8 @@ class CreateMenusAPI(APIView):
             res['status_code'] = 400
             res['message'] = "error"
             res['data'] = serializer.errors
+        logger.warning("EmployeeCreate  API response --> ")
+        logger.warning(res)
         return Response(res)
 
 
@@ -137,6 +159,8 @@ class TodayMenuAPI(APIView):
             "message": 'success',
             "data": serializer.data
         }
+        logger.warning("TodayMenu  API response --> ")
+        logger.warning(res)
         return Response(res)
 
 
@@ -144,6 +168,9 @@ class VoteAPI(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self,request):
+        logger.warning("Vote  API request --> ")
+        logger.warning(request.data)
+        
         request_data = request.data
         if request.user.user_role_id !=3:
             req = {
@@ -151,10 +178,14 @@ class VoteAPI(APIView):
                 "message": "Permission Deny",
                 "data": ''
             }
+            logger.warning("Vote  API response --> ")
+            logger.warning(req)
             return Response(req)
 
         if 'menu_id' not in request_data or request_data['menu_id'] is '':
             res = { 'status_code':400,"message":"","data":{"menu_id": "This field is blank/required!"}}
+            logger.warning("Vote  API response --> ")
+            logger.warning(res)
             return Response(res)
         menu_id = request_data['menu_id']
         user_id = request.user.id
@@ -162,6 +193,8 @@ class VoteAPI(APIView):
         try:
             VoteByUser.objects.get(created_by=user_id,date=date.today())
             res = {'status_code': 422, "message": "You already have voted! Only One Vote will be count.", "data": ""}
+            logger.warning("Vote  API response --> ")
+            logger.warning(res)
             return Response(res)
         except:
             pass
@@ -176,7 +209,6 @@ class VoteAPI(APIView):
                     "date": date.today()
                 }
                 serialized = VoteByUserSerializer(data=data_for_vote)
-                print(serialized.initial)
                 if serialized.is_valid():
                     obj = serialized.save()
                     res = {
@@ -200,6 +232,8 @@ class VoteAPI(APIView):
                     "message": 'Something went Wrong please Vote Again.',
                     "data": ""
                 }
+            logger.warning("Vote  API response --> ")
+            logger.warning(res)
             return Response(res)
 
 class VoteResultAPI(APIView):
@@ -241,6 +275,8 @@ class VoteResultAPI(APIView):
                     "menus": winner_obj[0].menus
                 }
             }
+        logger.warning("VoteResult  API response --> ")
+        logger.warning(res)
         return Response(res)
 
 
@@ -248,6 +284,8 @@ class LogoutViewAPI(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
+        logger.warning("LogoutView  API request --> ")
+        logger.warning(request.data)
         try:
             refresh_token = request.data["refresh_token"]
             token = RefreshToken(refresh_token)
@@ -261,5 +299,7 @@ class LogoutViewAPI(APIView):
                 "message": '',
                 "data": "Bad request"
             }
+            logger.warning("LogOut  API response --> ")
+            logger.warning(res)
             return Response(res)
 
