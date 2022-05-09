@@ -32,5 +32,11 @@ Install All required packages.
 
 
 **Docker : Before Start your docker compose please ensure the db user has remote access and privilege. 
- 
+**env : Please use .env file and data example 
+
+            SCHEMA_NAME='restaurant'
+            DB_USER='remote_user'
+            DB_PASSWORD='123456'
+            DB_HOST='192.168.XX.XXX'
+            DB_PORT='3306'
 
