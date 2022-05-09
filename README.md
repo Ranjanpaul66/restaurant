@@ -30,3 +30,7 @@ Install All required packages.
 
 <code>pip install -r req.txt </code>
 
+
+**Docker : Before Start your docker compose please ensure the db user has remote access and privilege. 
+ 
+
