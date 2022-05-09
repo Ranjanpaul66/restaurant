@@ -14,6 +14,7 @@ class CustomUserManager(BaseUserManager):
         user = self.model(email=email, full_name=full_name, password=password, **rest_fields)
         user.set_password(password)
         user.is_superuser = False
+        # user.is_superuser = False
         user.save(using=self._db)
         return user
 
@@ -39,6 +40,7 @@ class ApiUser(AbstractBaseUser, PermissionsMixin):
     email = models.CharField(max_length=254,unique=True)
     gender = models.CharField(max_length=10,blank=True,null=True)
     dob = models.DateField(max_length=20,blank=True,null=True)
+    is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     department = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -1,0 +1,13 @@
+docker build --tag restaurant_web .
+docker run --publish 8002:8002 restaurant_web
+
+
+docker save django-app > user_module_django.tar
+docker run -it django-app /bin/bash
+docker system prune -a
+
+docker-compose build
+docker-compose up
+docker-compose down
+
+CREATE USER 'remote_user'@'localhost' IDENTIFIED BY 'Test_user123'; 

@@ -1,0 +1,11 @@
+version: "3.3"
+services:
+  web:
+    build: .
+    ports:
+      - "8002:8005"
+    extra_hosts:
+      - "localhost:192.168.87.143"
+    command: python manage.py runserver 0.0.0.0:8005
+    volumes:
+    - .:/app
