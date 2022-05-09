@@ -1,4 +1,4 @@
-# restaurant
+# Restaurant
 
 <p>Here req.tx is requirement file where you can find all nacessary stuffs for this project. DB and POST-man collection is available here. </p>
 
